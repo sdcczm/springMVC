@@ -1,0 +1,61 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  
+    <!-- 配置 Spring,用spring管理bean-->  
+    <context-param>  
+        <param-name>contextConfigLocation</param-name>  
+        <param-value>classpath:spring-mybatis.xml</param-value>  
+    </context-param>  
+    <listener>  
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+    </listener>   
+  
+    <!-- 配置 SpringMVC分发servelet -->  
+   <servlet>
+        <servlet-name>springMVC</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+   
+    <servlet-mapping>
+        <servlet-name>springMVC</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+    
+  <!--  为了能够处理中文的post请求，再配置一个encodingFilter，以避免post请求中文出现乱码情况 -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+  
+  
+  <!-- 后台报错，定位到报错页面，以免报错信息抛到页面上 -->
+  	<error-page>
+		<error-code>500</error-code>
+		<location>/error.html</location>
+	</error-page>
+  
+  <error-page>
+		<error-code>400</error-code>
+		<location>/error.html</location>
+	</error-page>
+  
+  
+</web-app>
